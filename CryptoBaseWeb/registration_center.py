@@ -27,9 +27,6 @@ class RegistrationCenter:
         BaseInformation.objects.create(service_id=1, service_key=service_key_01, tpk=str(PPK), mk=MK)
         BaseInformation2.objects.create(service_id=2, service_key=service_key_02, tpk=str(PPK), mk=MK)
 
-
-
-
     def smart_car(self, user_id, mNBPW):
         global service_key_01, service_key_02
         pair_key_01 = random.getrandbits(1024)
