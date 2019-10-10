@@ -12,16 +12,8 @@ class RegistrationCenter:
         (self.pk, self.mk) = self.cpabe.setup()
 
     def initation(self):
-        # Xij key #############################
         cs_secret_key = [random.getrandbits(1024), random.getrandbits(1024)]
 
-        # service use the pk mk attrs get sk and enc it
-        # sk = cpabe.keygen(pk, mk, attrs)
-        # conn_01 = sqlite3.connect('service_01.db')
-        # conn_02 = sqlite3.connect('service_02.db')
-        # c_01 = conn_01.cursor()
-        # c_02 = conn_02.cursor()
-        # PK = str(self.pk)
         MK = str(self.mk)
         service_key_01 = str(cs_secret_key[0])
         service_key_02 = str(cs_secret_key[1])
@@ -31,16 +23,6 @@ class RegistrationCenter:
         f = self.groupObj.serialize(self.pk['f'])
         e_gg_alpha = self.groupObj.serialize(self.pk['e_gg_alpha'])
         PPK = {'g': g, 'g2': g2, 'h': h, 'f': f, 'e_gg_alpha': e_gg_alpha}
-        # PPK = RegistrationCenter.sezerlize(self, self.pk)
-        # c_01.execute('insert into main.base_information (service_id, service_key, pk, mk) '
-        #              'values ("{}", "{}", "{}", "{}")'.format(1, service_key_01, str(PPK), MK))
-        # c_02.execute('insert into main.base_information (service_id, service_key, pk, mk) '
-        #              'values ("{}", "{}", "{}", "{}")'.format(1, service_key_02, PK, MK))
-        #
-        # conn_01.commit()
-        # conn_01.close()
-        # conn_02.commit()
-        # conn_02.close()
 
         BaseInformation.objects.create(service_id=1, service_key=service_key_01, tpk=str(PPK), mk=MK)
         BaseInformation2.objects.create(service_id=2, service_key=service_key_02, tpk=str(PPK), mk=MK)
