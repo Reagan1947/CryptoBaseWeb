@@ -1,6 +1,6 @@
-import sqlite3
 import random
 from charm.toolbox.pairinggroup import PairingGroup, GT
+from base.models import *
 
 
 class CloudServiceProvider:
@@ -9,28 +9,38 @@ class CloudServiceProvider:
         pair_key = ''
         user_id = ''
         abe_pk = ''
-        data_base = 'service_0' + str(service_index) + '.db'
-        conn = sqlite3.connect(data_base)
-        c = conn.cursor()
-        cursor = c.execute("SELECT service_key FROM main.base_information")
-        for row_1 in cursor:
-            service_key = row_1[0]
+        # data_base = 'service_0' + str(service_index) + '.db'
+        # conn = sqlite3.connect(data_base)
+        # c = conn.cursor()
+        # cursor = c.execute("SELECT service_key FROM main.base_information")
+        # for row_1 in cursor:
+        #     service_key = row_1[0]
+        if service_index == 1:
+            database = BaseInformation
+        else:
+            database = BaseInformation2
+        sql_result = database.objects.get(service_id=service_index)
+        service_key = sql_result['service_key']
         NId_cs = hash(str(service_index) + service_key)
         # XId_U_star = XId_U ^ hash(str(Tm) + str(NId_cs))
-
         XId_U_star = log_in_result[1]
         Tm = log_in_result[2]
         XId_U = XId_U_star ^ hash(str(Tm) + str(NId_cs))
+        # print('XId_U is tag {}'.format(XId_U))
+        if service_index == 1:
+            database_au = Authentic
+        else:
+            database_au = Authentic2
+        sql_result_2 = database_au.objects.get(user_fake_id=XId_U)
+        user_id = sql_result_2['user_id']
+        pair_key = sql_result_2['pair_key']
 
-        print('XId_U is tag {}'.format(XId_U))
-        #################################### user id selet*???????????????
-        record = c.execute('SELECT * FROM authentica_information')
+
+        # record = c.execute('SELECT * FROM authentica_information')
         for row_2 in record:
             user_id = row_2[0]
             user_fake_id = row_2[1]
             pair_key = row_2[2]
-
-
 
         """
         here should add a select get the id and other by fake_id

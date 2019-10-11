@@ -1,5 +1,5 @@
 import random
-from decrypt import *
+from CryptoBaseWeb.decrypt import *
 
 
 class MobileUserLogin:

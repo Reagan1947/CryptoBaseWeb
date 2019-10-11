@@ -14,7 +14,21 @@ def register(request):
 
 
 def login(request):
-    mobile_login = MobileUserLogin(12, '123')
+    return render(request, 'login.html')
+
+
+def do_login(request):
+    user_id = ''
+    password = ''
+
+    if request.method == "POST":
+        user_id = request.POST.get('user_id')
+        password = request.POST.get('password')
+    mobile_login = MobileUserLogin(int(user_id), password)
+    data_name_str = 'data' + user_id + '.pkl'
+    with open(data_name_str, 'rb') as f:
+        smart_car = pickle.load(f)
+
     log_in_result = mobile_login.log_in(smart_car, 1)
 
     cloudProvider = CloudServiceProvider()
