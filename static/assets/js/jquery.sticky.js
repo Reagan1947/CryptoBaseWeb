@@ -13,10 +13,10 @@
 (function (factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['jquery'], factory);
+        define(['static/assets/js/jquery'], factory);
     } else if (typeof module === 'object' && module.exports) {
         // Node/CommonJS
-        module.exports = factory(require('jquery'));
+        module.exports = factory(require('static/assets/js/jquery'));
     } else {
         // Browser globals
         factory(jQuery);

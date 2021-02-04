@@ -61,6 +61,7 @@ class CPabe_BSW07(ABEnc):
             r_j = group.random()
             D_j[j] = g_r * (group.hash(j, G2) ** r_j)
             D_j_pr[j] = pk['g'] ** r_j
+
         return {'D': D, 'Dj': D_j, 'Djp': D_j_pr, 'S': S}
 
     @Input(pk_t, GT, str)
